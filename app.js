@@ -4,7 +4,7 @@ import userRouter from './routes/user.routes.js';
 import authRouter from './routes/auth.routes.js';
 import subscriptionRouter from './routes/subscription.routes.js';
 import connectDB from './database/mongodb.js';
-import errorHandler from './middleware/errorHandler.js';
+import errorHandler from './middlewares/error.handler.js';
 import cookiesParser from 'cookie-parser';
 
 const app = express();

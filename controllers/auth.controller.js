@@ -28,12 +28,16 @@ export const signUp = async (req, res, next) => {
         //generate token
         const token = jwt.sign({userId: newUsers[0]._id}, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
 
-        await mongoose.commitTransaction();
+        await session.commitTransaction();
         session.endSession();
+
         res.status(201).json({
             success: true,
             message: 'User registered successfully',
-            token
+            data:{
+                user: newUsers[0],
+                token
+            }
         });
 
     }catch(error){
