@@ -24,16 +24,21 @@ const authorize = async(req, res, next) => {
 
         if(!user){
             const error = new Error('User not found, authorization denied');
-            error.statusCode = 404;
+            error.statusCode = 401;
             throw error;
         }
 
         req.user = user;
+
         next();
 
 
     }catch(error){
-        next(error);
+        res.status(401).json({
+            success: false,
+            message: 'Unauthorized',
+            error: error.message
+        });
     }
 
 }

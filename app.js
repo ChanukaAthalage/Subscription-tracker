@@ -6,19 +6,20 @@ import subscriptionRouter from './routes/subscription.routes.js';
 import connectDB from './database/mongodb.js';
 import errorHandler from './middlewares/error.handler.js';
 import cookiesParser from 'cookie-parser';
-import authorize from './middlewares/user.middleware.js';
+import arcjetMiddleware from './middlewares/arcjet.middleware.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookiesParser());
+app.use(arcjetMiddleware);
 
-app.use(errorHandler);
-
-app.use('/api/v1/users',authorize, userRouter);
+app.use('/api/v1/users',userRouter);
 app.use('/api/v1/auths',authRouter);
 app.use('/api/v1/subscriptions',subscriptionRouter);
+
+app.use(errorHandler);
 
 app.listen(PORT, async () => {
     await connectDB();
