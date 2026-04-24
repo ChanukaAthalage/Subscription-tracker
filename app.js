@@ -6,6 +6,7 @@ import subscriptionRouter from './routes/subscription.routes.js';
 import connectDB from './database/mongodb.js';
 import errorHandler from './middlewares/error.handler.js';
 import cookiesParser from 'cookie-parser';
+import authorize from './middlewares/user.middleware.js';
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(cookiesParser());
 
 app.use(errorHandler);
 
-app.use('/api/v1/users',userRouter);
+app.use('/api/v1/users',authorize, userRouter);
 app.use('/api/v1/auths',authRouter);
 app.use('/api/v1/subscriptions',subscriptionRouter);
 
